@@ -6,6 +6,7 @@
         FontSize="20">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -23,22 +24,24 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBox Name="działanie" BorderThickness="0" IsReadOnly="True" Padding="8,0,8,0" TextAlignment="Right" Grid.Row="0" FontSize="16" Background="Black" Foreground="White"></TextBox>
-            <TextBox Name="wyświetlacz" Padding="4" IsReadOnly="True" BorderThickness="0" Grid.Row="1" FontSize="40" Background="Black" Foreground="White" TextAlignment="Right">0</TextBox>
+            <TextBox Name="działanie" BorderThickness="0" IsReadOnly="True" Padding="8,0,8,0" TextAlignment="Right" Grid.Row="0" FontSize="16" Background="Black" Foreground="White">0</TextBox>
+            <TextBox Name="wyświetlacz" Padding="0,0,6,0" IsReadOnly="True" BorderThickness="0" Grid.Row="1" FontSize="40" Background="Black" Foreground="White" TextAlignment="Right">0</TextBox>
         </Grid>
-        <Button Margin="10" Grid.Row="1" Grid.Column="1" Click="btn_Click">0</Button>
-        <Button Margin="10" Grid.Row="1" Grid.Column="2" Click="btn_Click">1</Button>
-        <Button Margin="10" Grid.Row="1" Grid.Column="3" Click="btn_Click">2</Button>
-        <Button Margin="10" Grid.Row="2" Grid.Column="1" Click="btn_Click">3</Button>
-        <Button Margin="10" Grid.Row="2" Grid.Column="2" Click="btn_Click">4</Button>
-        <Button Margin="10" Grid.Row="2" Grid.Column="3" Click="btn_Click">5</Button>
-        <Button Margin="10" Grid.Row="3" Grid.Column="1" Click="btn_Click">6</Button>
-        <Button Margin="10" Grid.Row="3" Grid.Column="2" Click="btn_Click">7</Button>
-        <Button Margin="10" Grid.Row="3" Grid.Column="3" Click="btn_Click">8</Button>
-        <Button Margin="10" Grid.Row="3" Grid.Column="4" Click="btn_Click">9</Button>
-        <Button Margin="10" Grid.Row="2" Grid.Column="4" Click="plus_Click">+</Button>
+        <Button Margin="10" Grid.Row="1" Grid.Column="1" Click="cyferka_Click">0</Button>
+        <Button Margin="10" Grid.Row="1" Grid.Column="2" Click="cyferka_Click">1</Button>
+        <Button Margin="10" Grid.Row="1" Grid.Column="3" Click="cyferka_Click">2</Button>
+        <Button Margin="10" Grid.Row="2" Grid.Column="1" Click="cyferka_Click">3</Button>
+        <Button Margin="10" Grid.Row="2" Grid.Column="2" Click="cyferka_Click">4</Button>
+        <Button Margin="10" Grid.Row="2" Grid.Column="3" Click="cyferka_Click">5</Button>
+        <Button Margin="10" Grid.Row="3" Grid.Column="1" Click="cyferka_Click">6</Button>
+        <Button Margin="10" Grid.Row="3" Grid.Column="2" Click="cyferka_Click">7</Button>
+        <Button Margin="10" Grid.Row="3" Grid.Column="3" Click="cyferka_Click">8</Button>
+        <Button Margin="10" Grid.Row="3" Grid.Column="4" Click="cyferka_Click">9</Button>
+        <Button Margin="10" Grid.Row="2" Grid.Column="4" Click="plusLubMinus_Click">+</Button>
         <Button Margin="10" Grid.Row="1" Grid.Column="4" Click="równaq_Click">=</Button>
         <Button Margin="10" Grid.Row="1" Grid.Column="0" Click="przecinek_Click">,</Button>
         <Button Margin="10" Grid.Row="3" Grid.Column="0" Click="usuń_Click">U</Button>
+        <Button Margin="10" Grid.Row="2" Grid.Column="0" Click="plusLubMinus_Click">-</Button>
+        <Button Margin="10" Grid.Row="4" Grid.Column="0" Click="usuńWszystko_Click">UW</Button>
     </Grid>
 </Window>

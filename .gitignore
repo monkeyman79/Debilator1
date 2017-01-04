@@ -1,0 +1,7 @@
+﻿################################################################################
+# Ten plik .gitignore został utworzony automatycznie przez Microsoft(R) Visual Studio.
+################################################################################
+
+*.suo
+/Debilator1/bin/Debug
+/Debilator1/obj/Debug

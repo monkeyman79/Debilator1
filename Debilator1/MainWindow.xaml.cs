@@ -3,6 +3,7 @@ using System.Windows.Controls;
 
 // C#
 
+
 namespace Debilator1
 {
 
@@ -11,140 +12,183 @@ namespace Debilator1
     /// </summary>
     public partial class MainWindow : Window
     {
-        string liczba_wprowadzana;
-        string aktualne_działanie;
-        string poprzednio_kliknięty_znak;
+        string liczbaWprowadzana;
+        string wszystkieDziałaniaBezLiczbyWprowadzanej;
+        string poprzednioKlikniętyZnakDziałania;
+        bool liczbaZostałaOstatnioWpisana;
 
         decimal wynik;
-//        decimal wartość;
+
 
         public MainWindow()
         {
-            liczba_wprowadzana = "0";
-            aktualne_działanie = "";
-            poprzednio_kliknięty_znak = "";
-            wynik = 0.0m;
+            usuńWszysko();
             InitializeComponent();
         }
 
-        private bool czy_jest_miejsce()
+        private void usuńWszysko()
         {
-            if (liczba_wprowadzana.Length > 20)
+            liczbaWprowadzana = "0";
+            wszystkieDziałaniaBezLiczbyWprowadzanej = "";
+            poprzednioKlikniętyZnakDziałania = "";
+            wynik = 0.0m;
+            liczbaZostałaOstatnioWpisana = false;
+        }
+
+        private bool jestMiejsce()
+        {
+            if (liczbaWprowadzana.Length > 20)
                 return false;
             return true;
         }
 
-        private bool czy_jest_przecinek()
+        private bool jestPrzecinek()
         {
-            if (liczba_wprowadzana.Contains(","))
+            if (liczbaWprowadzana.Contains(","))
                 return true;
             return false;
         }
 
-        private bool czy_jest_pusto()
+        private bool jestPusto()
         {
-            if (liczba_wprowadzana.Length == 0)
+            if (liczbaWprowadzana.Length == 0)
                 return true;
             return false;
         }
 
-        private void wyświetl_liczbę_wprowadzaną()
+        private void wyświetlLiczbęWprowadzaną()
         {
-            wyświetlacz.Text = liczba_wprowadzana;
+            wyświetlacz.Text = liczbaWprowadzana;
         }
 
-        private void wyświetl_wynik()
+        private void wyświetlWynik()
         {
             wyświetlacz.Text = wynik.ToString();
         }
 
-        private void wyświetl_działanie()
+        private void wyświetlDziałanie()
         {
-            działanie.Text = aktualne_działanie;
-        }
-
-        private void btn_Click(object sender, RoutedEventArgs e)
-        {
-            var cyferka = ((Button)sender).Content.ToString();
-            if (czy_jest_miejsce())
+            if (liczbaZostałaOstatnioWpisana)
             {
-                aktualne_działanie = aktualne_działanie + cyferka;
-                wyświetl_działanie();
-                if (liczba_wprowadzana == "0")
-                {
-                    liczba_wprowadzana = cyferka;
-                }
-                else
-                {
-                    liczba_wprowadzana = liczba_wprowadzana + cyferka;
-                }
-            }
-            wyświetl_liczbę_wprowadzaną();
-        }
-
-        private void wykonaj_ostatnie_działanie()
-        {
-            if (poprzednio_kliknięty_znak == "+")
-            {
-                wynik = wynik + decimal.Parse(liczba_wprowadzana);
+                działanie.Text = wszystkieDziałaniaBezLiczbyWprowadzanej + liczbaWprowadzana;
             }
             else
             {
-                wynik = decimal.Parse(liczba_wprowadzana);
+                działanie.Text = wszystkieDziałaniaBezLiczbyWprowadzanej;
             }
-            poprzednio_kliknięty_znak = "";
-            wyświetl_wynik();
         }
 
-        private void plus_Click(object sender, RoutedEventArgs e)
+        private void wykonajOstatnieDziałanie()
         {
-            wykonaj_ostatnie_działanie();
-
-            // aktualne_działanie = aktualne_działanie + liczba_wprowadzana + "+";
-            aktualne_działanie = aktualne_działanie + "+";
-            wyświetl_działanie();
-
-            liczba_wprowadzana = "0";
-            poprzednio_kliknięty_znak = "+";
+            if (poprzednioKlikniętyZnakDziałania == "+")
+            {
+                wynik = wynik + decimal.Parse(liczbaWprowadzana);
+            }
+            else if (poprzednioKlikniętyZnakDziałania == "-")
+            {
+                wynik = wynik - decimal.Parse(liczbaWprowadzana);
+            }
+            else if (poprzednioKlikniętyZnakDziałania == "")
+            {
+                wynik = decimal.Parse(liczbaWprowadzana);
+            }
+            wszystkieDziałaniaBezLiczbyWprowadzanej = wszystkieDziałaniaBezLiczbyWprowadzanej + liczbaWprowadzana;
+            wyświetlWynik();
         }
 
-        private void równaq_Click(object sender, RoutedEventArgs e)
+        private void cyferka_Click(object sender, RoutedEventArgs e)
         {
-            wykonaj_ostatnie_działanie();
+            string cyferkaLubPrzecinek = ((Button)sender).Content.ToString();
+            if (poprzednioKlikniętyZnakDziałania == "=")
+            {
+                wszystkieDziałaniaBezLiczbyWprowadzanej = "";
+                poprzednioKlikniętyZnakDziałania = "";
+            }
+            if (jestMiejsce())
+            {
+                if (liczbaWprowadzana == "0" && cyferkaLubPrzecinek != ",")
+                {
+                    liczbaWprowadzana = "";
+                }
 
-            // aktualne_działanie = aktualne_działanie + liczba_wprowadzana;
-            wyświetl_działanie();
-
-            aktualne_działanie = "";
-
-            liczba_wprowadzana = "0";
+                liczbaWprowadzana = liczbaWprowadzana + cyferkaLubPrzecinek;
+                liczbaZostałaOstatnioWpisana = true;
+            }
+            wyświetlLiczbęWprowadzaną();
+            wyświetlDziałanie();
         }
 
         private void przecinek_Click(object sender, RoutedEventArgs e)
         {
-            if (czy_jest_miejsce() && !czy_jest_przecinek())
+            if (!jestPrzecinek())
             {
-                if (czy_jest_pusto())
+                if (jestPusto())
                 {
-                    liczba_wprowadzana = "0";
+                    liczbaWprowadzana = "0";
                 }
-                liczba_wprowadzana = liczba_wprowadzana + ",";
+                cyferka_Click(sender, e);
             }
-            wyświetl_liczbę_wprowadzaną();
+        }
+
+        private void plusLubMinus_Click(object sender, RoutedEventArgs e)
+        {
+            string znakDziałania = ((Button)sender).Content.ToString();
+            if (liczbaZostałaOstatnioWpisana)
+            {
+                wykonajOstatnieDziałanie();
+
+                wszystkieDziałaniaBezLiczbyWprowadzanej = wszystkieDziałaniaBezLiczbyWprowadzanej + znakDziałania;
+
+                liczbaWprowadzana = "0";
+                poprzednioKlikniętyZnakDziałania = znakDziałania;
+                liczbaZostałaOstatnioWpisana = false;
+            }
+            else if (poprzednioKlikniętyZnakDziałania == "=")
+            {
+                wszystkieDziałaniaBezLiczbyWprowadzanej = wszystkieDziałaniaBezLiczbyWprowadzanej + znakDziałania;
+
+                poprzednioKlikniętyZnakDziałania = znakDziałania;
+            }
+            wyświetlDziałanie();
+        }
+
+        private void równaq_Click(object sender, RoutedEventArgs e)
+        {
+            if (poprzednioKlikniętyZnakDziałania != "=")
+            {
+                wykonajOstatnieDziałanie();
+            }
+
+            liczbaZostałaOstatnioWpisana = false;
+            wyświetlDziałanie();
+
+            //wszystkieDziałaniaBezLiczbyWprowadzanej = "";
+
+            poprzednioKlikniętyZnakDziałania = "=";
+            liczbaWprowadzana = "0";
         }
 
         private void usuń_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!czy_jest_pusto())
+            if (!jestPusto())
             {
-                liczba_wprowadzana = liczba_wprowadzana.Substring(0, liczba_wprowadzana.Length - 1);
-                if (czy_jest_pusto())
+                liczbaWprowadzana = liczbaWprowadzana.Substring(0, liczbaWprowadzana.Length - 1);
+                if (jestPusto())
                 {
-                    liczba_wprowadzana = "0";
+                    liczbaWprowadzana = "0";
                 }
             }
-            wyświetl_liczbę_wprowadzaną();
+            wyświetlLiczbęWprowadzaną();
+            wyświetlDziałanie();
         }
+
+        private void usuńWszystko_Click(object sender, RoutedEventArgs e)
+        {
+            usuńWszysko();
+            wyświetlLiczbęWprowadzaną();
+            wyświetlDziałanie();
+        }
+
     }
 }
